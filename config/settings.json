@@ -1,0 +1,32 @@
+{
+    "pins": {
+        "motor_left": 18,
+        "motor_right": 19,
+        "pumps": [17, 27, 22, 23],
+        "camera_pan": 12,
+        "camera_tilt": 13
+    },
+    "esc_range": {
+        "min": 1000,
+        "max": 2000
+    },
+    "gps": {
+        "port": "/dev/serial0",
+        "baudrate": 9600
+    },
+    "websocket": {
+        "host": "0.0.0.0",
+        "port": 8000
+    },
+    "pump_durations": {
+        "default": 5,
+        "min": 1,
+        "max": 30
+    },
+    "data_logging": {
+        "csv_file": "water_samples.csv",
+        "json_file": "water_samples.json",
+        "samples_dir": "samples",
+        "log_interval": 1
+    }
+}

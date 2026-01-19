@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - FPV Boat Control System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* About page specific styles */
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, var(--dark-card), rgba(30, 136, 229, 0.1));
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(30, 136, 229, 0.2);
+        }
+
+        .about-header h1 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(30, 136, 229, 0.3);
+        }
+
+        .about-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .team-member {
+            background: var(--dark-card);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(30, 136, 229, 0.2);
+        }
+
+        .member-image {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+            position: relative;
+        }
+
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .member-image .fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .member-info h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .member-info h4 {
+            color: var(--warning);
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .member-info p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(30, 136, 229, 0.1);
+            border: 1px solid rgba(30, 136, 229, 0.3);
+            border-radius: 50%;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .project-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .info-card {
+            background: var(--dark-card);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 136, 229, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .about-header h1 {
+                font-size: 2rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        Back to Dashboard
+    </a>
+
+    <div class="about-container">
+        <div class="about-header">
+            <h1><i class="fas fa-ship"></i> Aquabot Research Vessel</h1>
+            <p>Revolutionizing marine research with autonomous FPV catamaran technology for water quality monitoring and environmental studies. Our advanced system combines real-time telemetry, GPS navigation, and remote control capabilities for comprehensive marine data collection.</p>
+        </div>
+
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="images/team/afnan.jpg" alt="Mohamed Afnan" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="fallback" style="display: none;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3>Mohamed Afnan</h3>
+                    <h4>Electronic & Automation Engineer | Software Lead</h4>
+                    <p>
+                        Electronic and Automation Engineering undergraduate with strong contributions in both 
+                        electronics and software development for the Aquabot system. Experienced in embedded systems, 
+                        sensor integration, PCB design, automation, and full-stack development for real-time monitoring 
+                        and control. Passionate about building innovative, reliable, and efficient engineering solutions.
+                    </p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/mohamed-afnan1abb26282" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Afnan22725" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://afnan22725.github.io/" target="_blank" title="Portfolio">
+                        <i class="fas fa-globe"></i>
+                    </a>
+                    <a href="mailto:mnmafnan2021@gmail.com" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="images/team/basith.jpg.png" alt="Basith Nawas" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="fallback" style="display: none;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3>Basith Nawas</h3>
+                    <h4>Electronic & Automation Engineer</h4>
+                    <p>
+                        Electronic and Automation Engineering undergraduate with hands-on experience in electronics, 
+                        control systems, automation, and embedded applications. Contributed to hardware integration, 
+                        system testing, and implementation of reliable electronic solutions for the Aquabot project, 
+                        with a strong focus on practical and laboratory-based engineering work.
+                    </p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/abdulbasithnawas/" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/basithnawas" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://basithnawas.netlify.app/" target="_blank" title="Portfolio">
+                        <i class="fas fa-globe"></i>
+                    </a>
+                    <a href="mailto:ab0776153355@gmail.com" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="images/team/atheek.jpg" alt="Atheek Ahmath" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="fallback" style="display: none;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3>Atheek Ahmath</h3>
+                    <h4>Electronic & Automation Engineer</h4>
+                    <p>
+                        Electronic and Automation Engineering undergraduate with practical knowledge in electronics, 
+                        sensors, microcontrollers, and embedded system fundamentals. Actively involved in hardware 
+                        development, troubleshooting, and system-level implementation for the Aquabot research vessel, 
+                        with a strong interest in automation and embedded technologies.
+                    </p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/me?trk=p_mwlite_feed-secondary_nav" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Ahmath70" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:ahmathatheeq@gmail.com" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-info">
+            <div class="info-card">
+                <i class="fas fa-microchip"></i>
+                <h3>Advanced Technology</h3>
+                <p>Our boat features cutting-edge sensors including GPS, IMU, battery monitoring, and high-definition cameras with pan/tilt control. Real-time data streaming ensures comprehensive monitoring capabilities.</p>
+            </div>
+
+            <div class="info-card">
+                <i class="fas fa-wifi"></i>
+                <h3>Remote Control</h3>
+                <p>WebSocket-based real-time communication allows for seamless remote operation from anywhere in the world. Responsive web interface works on desktop, tablet, and mobile devices.</p>
+            </div>
+
+            <div class="info-card">
+                <i class="fas fa-water"></i>
+                <h3>Water Sampling</h3>
+                <p>Automated water sampling system with GPS-tagged collection points. Multiple pump controls enable targeted sample collection for various research parameters and environmental studies.</p>
+            </div>
+
+            <div class="info-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Data Analytics</h3>
+                <p>Comprehensive telemetry logging and analysis tools. Real-time visualization of sensor data, GPS tracking, and system health monitoring for research documentation.</p>
+            </div>
+
+            <div class="info-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Reliability</h3>
+                <p>Redundant systems, automatic error recovery, and fail-safe mechanisms ensure reliable operation in marine environments. Weatherproof design suitable for various conditions.</p>
+            </div>
+
+            <div class="info-card">
+                <i class="fas fa-leaf"></i>
+                <h3>Environmental Impact</h3>
+                <p>Contributing to marine conservation through advanced monitoring capabilities. Our research vessel helps scientists study water quality, pollution levels, and ecosystem health non-intrusively.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards
+            document.querySelectorAll('.team-member, .info-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Add hover effects for social links
+            document.querySelectorAll('.social-links a').forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.2) rotate(5deg)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+[Unit]
+Description=Boat Dashboard Server
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/boat-dashboard
+Environment=PATH=/home/pi/boat-dashboard/boat_env/bin
+ExecStart=/home/pi/boat-dashboard/boat_env/bin/python /home/pi/boat-dashboard/server/main.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

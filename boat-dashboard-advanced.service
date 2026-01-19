@@ -1,0 +1,36 @@
+[Unit]
+Description=Boat Dashboard Server with Auto-Recovery
+After=network.target pigpiod.service
+Wants=network.target
+Requires=pigpiod.service
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/boat-dashboard
+Environment=PATH=/home/pi/boat-dashboard/boat_env/bin
+ExecStartPre=/bin/bash -c 'until ping -c1 google.com; do sleep 5; done'
+ExecStartPre=/usr/bin/i2cdetect -y 1
+ExecStart=/home/pi/boat-dashboard/boat_env/bin/python /home/pi/boat-dashboard/server/main.py
+Restart=always
+RestartSec=15
+StartLimitBurst=5
+StartLimitIntervalSec=300
+
+# Restart service if it fails
+RestartKillSignal=SIGTERM
+KillMode=mixed
+TimeoutStopSec=30
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=boat-dashboard
+
+# Security
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

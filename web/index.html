@@ -1,0 +1,218 @@
+<!-- Main dashboard UI -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPV Boat Dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>Aquabot Research Vessel</h1>
+            </div>
+            <div class="header-nav">
+                <a href="about.html" class="nav-link">
+                    <i class="fas fa-info-circle"></i>
+                    About Us
+                </a>
+            </div>
+            <div class="status-bar">
+                <div class="status-item" id="connection-status">
+                    <span class="status-dot disconnected"></span>
+                    <span>Disconnected</span>
+                </div>
+                <div class="status-item" id="battery-status">
+                    <i class="fas fa-battery-full"></i>
+                    <span>Battery: 0%</span>
+                </div>
+                <div class="status-item" id="gps-status">
+                    <i class="icon-gps"></i>
+                    <span>No GPS</span>
+                </div>
+                <div class="status-item" id="signal-status">
+                    <i class="icon-signal"></i>
+                    <span>N/A</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Video Feed -->
+            <div class="video-panel panel">
+                <h2>Live Video Feed</h2>
+                <div class="video-container">
+                    <img id="video-feed" src="" alt="Live video feed">
+                    <div class="video-overlay">
+                        <div class="overlay-item">
+                            <span>Speed: </span>
+                            <span id="speed-value">0.0 knots</span>
+                        </div>
+                        <div class="overlay-item">
+                            <span>Heading: </span>
+                            <span id="heading-value">0°</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Camera Controls -->
+                <div class="camera-controls">
+                    <h3>📹 Camera Control</h3>
+                    <div class="camera-control-grid">
+                        <div class="camera-row">
+                            <button id="btn-tilt-up" class="camera-btn" data-command="tilt" data-direction="up" title="Tilt Up">▲</button>
+                        </div>
+                        <div class="camera-row">
+                            <button id="btn-pan-left" class="camera-btn" data-command="pan" data-direction="left" title="Pan Left">◄</button>
+                            <button id="btn-center" class="camera-btn center" data-command="center" title="Center Camera">●</button>
+                            <button id="btn-pan-right" class="camera-btn" data-command="pan" data-direction="right" title="Pan Right">►</button>
+                        </div>
+                        <div class="camera-row">
+                            <button id="btn-tilt-down" class="camera-btn" data-command="tilt" data-direction="down" title="Tilt Down">▼</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Camera Presets -->
+                    <div class="camera-presets">
+                        <button class="preset-btn" data-preset="front">Front</button>
+                        <button class="preset-btn" data-preset="left">Left</button>
+                        <button class="preset-btn" data-preset="right">Right</button>
+                        <button class="preset-btn" data-preset="down">Down</button>
+                    </div>
+                    
+                    <!-- Servo Position Display -->
+                    <div class="servo-status">
+                        <div class="servo-info">
+                            <span>Pan: <span id="pan-angle">90°</span></span>
+                            <span>Tilt: <span id="tilt-angle">90°</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div class="map-panel panel">
+                <h2>GPS Map <button id="center-map" class="btn-small">Center</button></h2>
+                <div id="map"></div>
+            </div>
+
+            <!-- Controls -->
+            <div class="control-panel panel">
+                <h2>Motor Controls</h2>
+                <div class="control-grid">
+                    <button id="btn-forward" class="control-btn">Forward</button>
+                    <button id="btn-left" class="control-btn">Left</button>
+                    <button id="btn-stop" class="control-btn stop">Stop</button>
+                    <button id="btn-right" class="control-btn">Right</button>
+                    <button id="btn-backward" class="control-btn">Backward</button>
+                </div>
+
+                <h2>Pump Controls</h2>
+                <div class="pump-controls">
+                    <div class="pump-item">
+                        <span>Pump 1</span>
+                        <input type="number" id="pump1-duration" min="1" max="30" value="5">
+                        <button class="pump-btn" data-pump="1">Activate</button>
+                    </div>
+                    <div class="pump-item">
+                        <span>Pump 2</span>
+                        <input type="number" id="pump2-duration" min="1" max="30" value="5">
+                        <button class="pump-btn" data-pump="2">Activate</button>
+                    </div>
+                    <div class="pump-item">
+                        <span>Pump 3</span>
+                        <input type="number" id="pump3-duration" min="1" max="30" value="5">
+                        <button class="pump-btn" data-pump="3">Activate</button>
+                    </div>
+                    <div class="pump-item">
+                        <span>Pump 4</span>
+                        <input type="number" id="pump4-duration" min="1" max="30" value="5">
+                        <button class="pump-btn" data-pump="4">Activate</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample Management -->
+            <div class="samples-panel panel">
+                <h2>Water Sample Management</h2>
+                
+                <!-- Sample Statistics -->
+                <div class="sample-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Samples:</span>
+                        <span id="total-samples" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Today:</span>
+                        <span id="today-samples" class="stat-value">0</span>
+                    </div>
+                </div>
+
+                <!-- Sample Controls -->
+                <div class="sample-controls">
+                    <button id="refresh-samples" class="sample-btn">
+                        <i class="fas fa-sync-alt"></i> Refresh Data
+                    </button>
+                    <button id="show-samples-map" class="sample-btn">
+                        <i class="fas fa-map-marker-alt"></i> Show on Map
+                    </button>
+                    <button id="export-geojson" class="sample-btn">
+                        <i class="fas fa-download"></i> Export GeoJSON
+                    </button>
+                    <button id="export-csv" class="sample-btn">
+                        <i class="fas fa-file-csv"></i> Export CSV
+                    </button>
+                </div>
+
+                <!-- Recent Samples List -->
+                <div class="recent-samples">
+                    <h3>Recent Samples</h3>
+                    <div id="samples-list" class="samples-list">
+                        <p class="no-samples">No samples collected yet</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D Visualization -->
+            <div class="visualization-panel panel">
+                <h2>3D Boat Visualization</h2>
+                <div id="boat-container"></div>
+            </div>
+
+            <!-- Telemetry -->
+            <div class="telemetry-panel panel">
+                <h2>Telemetry Data</h2>
+                <div class="telemetry-grid">
+                    <div class="telemetry-item">
+                        <h3>GPS</h3>
+                        <div id="gps-data">Waiting for data...</div>
+                    </div>
+                    <div class="telemetry-item">
+                        <h3>IMU</h3>
+                        <div id="imu-data">Waiting for data...</div>
+                    </div>
+                    <div class="telemetry-item">
+                        <h3>Battery</h3>
+                        <div id="battery-data">Waiting for data...</div>
+                    </div>
+                    <div class="telemetry-item">
+                        <h3>System</h3>
+                        <div id="system-data">Waiting for data...</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
